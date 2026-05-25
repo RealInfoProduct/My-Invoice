@@ -125,6 +125,10 @@ export interface RawList {
     price:number
     creditDate:any,
     totalAmount:any,
+    sGSt:any,
+    cGSt:any,
+    finalTotal:any,
+    isGstEnabled:any,
     userId :any,
     receivePayment : any
 }

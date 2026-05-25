@@ -18,7 +18,18 @@ import jsPDF from 'jspdf';
 })
 export class RawMaterialComponent implements OnInit {
  dateRawListForm: FormGroup;
-  rowMaterialDataColumns: string[] = ['#', 'name', 'quantity', 'price', 'date', 'totalAmount', 'action']
+  rowMaterialDataColumns: string[] = [
+  '#',
+  'date',
+  'name',
+  'quantity',
+  'price',
+  'totalAmount',
+  'sGSt',
+  'cGSt',
+  'finalTotal',
+  'action'
+];
   rowMaterialList: any = [];
 
   rowDataSource = new MatTableDataSource(this.rowMaterialList);
@@ -105,6 +116,10 @@ export class RawMaterialComponent implements OnInit {
           price: result.data.price,
           creditDate: result.data.creditDate,
           totalAmount: quantity * price,
+          sGSt: result.data.sGSt,
+          cGSt: result.data.cGSt,
+          finalTotal: result.data.finalTotal,
+          isGstEnabled: result.data.isGstEnabled,
           receivePayment:[],
           userId: localStorage.getItem("userId")
         }
@@ -133,6 +148,10 @@ export class RawMaterialComponent implements OnInit {
               price: result.data.price,
               creditDate: result.data.creditDate,
               totalAmount: quantity * price,
+               sGSt: result.data.sGSt,
+               cGSt: result.data.cGSt,
+               finalTotal: result.data.finalTotal,
+                 isGstEnabled: result.data.isGstEnabled,
                receivePayment:element.receivePayment || [],
               userId: localStorage.getItem("userId")
             }
@@ -200,7 +219,7 @@ export class RawMaterialComponent implements OnInit {
 
   // Total Amount
   const totalAmount = this.rowDataSource.data.reduce(
-    (sum: number, item: any) => sum + Number(item.totalAmount || 0),
+    (sum: number, item: any) => sum + Number(item.finalTotal  || 0),
     0
   );
 
@@ -214,29 +233,29 @@ export class RawMaterialComponent implements OnInit {
   // Table headers
   const headers = [
     '#',
+    'Date',
     'Name',
     'Quantity',
     'Price',
-    'Date',
     'Total Amount',
-    'Received',
+    'Given',
     'Balance'
   ];
 
   // Table data
   const data = this.rowDataSource.data.map((item: any, index: number) => {
     const received = this.calculateTotalReceivedPayment(item.receivePayment);
-    const balance = Number(item.totalAmount || 0) - received;
+    const balance = Number(item.finalTotal  || 0) - received;
 
     return [
       index + 1,
-      item.name,
-      item.quantity,
-      item.price,
       item.creditDate?.seconds
         ? new Date(item.creditDate.seconds * 1000).toLocaleDateString('en-GB')
         : '',
-      item.totalAmount,
+      item.name,
+      item.quantity,
+      item.price,
+      item.finalTotal,
       received,
       balance
     ];
