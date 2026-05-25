@@ -64,7 +64,50 @@ export class RawMaterialDialogComponent implements OnInit {
     this.dialogRef.close({ event: this.action, data: payload })
   }
 
- calculateAmounts(): void {
+//  calculateAmounts(): void {
+//   this.rowMaterialForm.valueChanges.subscribe((value) => {
+
+//     const quantity = Number(value.quantity) || 0;
+//     const price = Number(value.price) || 0;
+
+//     // Base total
+//     const total = quantity * price;
+
+//     let sgst = Number(value.sGSt) || 0;
+//     let cgst = Number(value.cGSt) || 0;
+//     let finalTotal = total;
+
+//     // GST enabled hoy to GST calculate karo
+//     if (value.isGstEnabled) {
+
+//       const sgstAmount = (total * sgst) / 100;
+//       const cgstAmount = (total * cgst) / 100;
+
+//       finalTotal = total + sgstAmount + cgstAmount;
+
+//     } else {
+
+//       // GST disabled hoy to 0 set karo
+//       sgst = 0;
+//       cgst = 0;
+
+//       finalTotal = total;
+//     }
+
+//     this.rowMaterialForm.patchValue(
+//       {
+//         sGSt: sgst,
+//         cGSt: cgst,
+//         total: total.toFixed(2),
+//         finalTotal: finalTotal.toFixed(2)
+//       },
+//       { emitEvent: false }
+//     );
+//   });
+// }
+
+
+calculateAmounts(): void {
   this.rowMaterialForm.valueChanges.subscribe((value) => {
 
     const quantity = Number(value.quantity) || 0;
@@ -73,8 +116,9 @@ export class RawMaterialDialogComponent implements OnInit {
     // Base total
     const total = quantity * price;
 
-    let sgst = Number(value.sGSt) || 0;
-    let cgst = Number(value.cGSt) || 0;
+    let sgst = value.isGstEnabled ? 2.5 : 0;
+    let cgst = value.isGstEnabled ? 2.5 : 0;
+
     let finalTotal = total;
 
     // GST enabled hoy to GST calculate karo
@@ -86,10 +130,6 @@ export class RawMaterialDialogComponent implements OnInit {
       finalTotal = total + sgstAmount + cgstAmount;
 
     } else {
-
-      // GST disabled hoy to 0 set karo
-      sgst = 0;
-      cgst = 0;
 
       finalTotal = total;
     }
@@ -105,5 +145,4 @@ export class RawMaterialDialogComponent implements OnInit {
     );
   });
 }
-
 }
