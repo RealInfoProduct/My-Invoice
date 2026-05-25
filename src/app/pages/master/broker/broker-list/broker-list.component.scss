@@ -1,32 +1,34 @@
 .ADDbutton {
   margin-top: 18px;
 }
+#status{
 
-// /* Form field overall height control */
-::ng-deep .status .mat-mdc-form-field {
-   width: 140px;
-  height: 30px;
-}
-
-/* Flex container */
-::ng-deep .status .mat-mdc-text-field-wrapper {
-  height: 30px !important;
-  padding: 0 !important;
-}
-
-/* Infix (input area) */
-::ng-deep .status .mat-mdc-form-field-infix {
-  min-height: 30px !important;
-  padding: 0 8px !important;
-  display: flex;
-  align-items: center;
-}
-
-/* Select trigger (text area) */
-::ng-deep .status .mat-mdc-select-trigger {
-  height: 30px;
-  display: flex;
-  align-items: center;
+  // /* Form field overall height control */
+  .status .mat-mdc-form-field {
+     width: 140px;
+    height: 30px;
+  }
+  
+  /* Flex container */
+  .status .mat-mdc-text-field-wrapper {
+    height: 30px !important;
+    padding: 0 !important;
+  }
+  
+  /* Infix (input area) */
+  .status .mat-mdc-form-field-infix {
+    min-height: 30px !important;
+    padding: 0 8px !important;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Select trigger (text area) */
+  .status .mat-mdc-select-trigger {
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .mat-mdc-card-content:last-child {
