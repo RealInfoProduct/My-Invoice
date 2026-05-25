@@ -238,6 +238,8 @@ export class RawMaterialComponent implements OnInit {
     'Quantity',
     'Price',
     'Total Amount',
+    'SGSt',
+    'CGST',
     'Given',
     'Balance'
   ];
@@ -255,7 +257,9 @@ export class RawMaterialComponent implements OnInit {
       item.name,
       item.quantity,
       item.price,
-      item.finalTotal,
+      item.totalAmount,
+      item.sGSt,
+      item.cGSt,
       received,
       balance
     ];
