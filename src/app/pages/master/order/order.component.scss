@@ -1,23 +1,23 @@
 #status {
 
-  .status .mat-mdc-form-field {
+  ::ng-deep .status .mat-mdc-form-field {
     width: 140px;
     height: 30px;
   }
 
-  .status .mat-mdc-text-field-wrapper {
+  ::ng-deep .status .mat-mdc-text-field-wrapper {
     height: 30px !important;
     padding: 0 !important;
   }
 
-  .status .mat-mdc-form-field-infix {
+  ::ng-deep .status .mat-mdc-form-field-infix {
     min-height: 30px !important;
     padding: 0 8px !important;
     display: flex;
     align-items: center;
   }
 
-  .status .mat-mdc-select-trigger {
+  ::ng-deep .status .mat-mdc-select-trigger {
     height: 30px;
     display: flex;
     align-items: center;
