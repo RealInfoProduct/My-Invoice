@@ -33,10 +33,11 @@
     }
   }
 }
-
-/* --- Mat Form Field Overrides --- */
-::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  display: none; // Hides the hint space for a cleaner look
+#mat-mdc-form-field-subscript-wrapper{
+  /* --- Mat Form Field Overrides --- */
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none; // Hides the hint space for a cleaner look
+  }
 }
 
 /* --- Responsive Breakpoints --- */

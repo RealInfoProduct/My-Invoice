@@ -28,6 +28,7 @@ $border-color: #ebf1f6;
       }
     }
   }
+#mat-mdc-tab-header{
 
   ::ng-deep {
     .mat-mdc-tab-header {
@@ -38,6 +39,7 @@ $border-color: #ebf1f6;
       font-weight: 600;
     }
   }
+}
 
   .cardWithShadow {
     box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.05);
@@ -116,8 +118,11 @@ $border-color: #ebf1f6;
 
 
 @media (max-width: 1420px) {
-  ::ng-deep .mat-mdc-tab-header {
+  #mat-mdc-tab-header{
+    ::ng-deep .mat-mdc-tab-header {
     max-width: 100% !important;
+    }
+
   }
 
   .invoiceTab .GenerateInvoice {
@@ -180,10 +185,12 @@ $border-color: #ebf1f6;
     margin-top: 4px !important;
     margin-bottom: 8px !important;
   }
-
+#mat-mdc-tab-header{
   ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
     font-size: 12px;
   }
+  
+}
 
   .mat-column-Defectiveitem,
   .mat-column-PoNumber,
