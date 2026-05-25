@@ -23,6 +23,7 @@ export class RawMaterialDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.rowMateriallist(this.action === 'Edit' ? this.local_data : undefined);
+     this.calculateAmounts();
   }
 
   rowMateriallist(data:any) {
@@ -31,6 +32,11 @@ export class RawMaterialDialogComponent implements OnInit {
       quantity: [data ? data?.quantity :'', Validators.required],
       price: [data ? data?.price :'', Validators.required],
       creditDate: [data ? this.convertTimestampToDate(data?.creditDate) : new Date()],
+      sGSt:[data ? data?.sGSt :2.5],
+      cGSt:[data ? data?.cGSt :2.5],
+      finalTotal:[data ? data?.finalTotal :0],
+      total:[data ? data?.totalAmount :0],
+        isGstEnabled: [data ? data?.isGstEnabled : true],
     })
   }
 
@@ -48,9 +54,56 @@ export class RawMaterialDialogComponent implements OnInit {
       quantity: this.rowMaterialForm.value.quantity,
       price: this.rowMaterialForm.value.price,
       creditDate: this.rowMaterialForm.value.creditDate,
-      totalAmount: this.rowMaterialForm.value.creditDate,
+      totalAmount: this.rowMaterialForm.value.totalAmount,
+      sGSt: this.rowMaterialForm.value.sGSt,
+      cGSt: this.rowMaterialForm.value.cGSt,
+      finalTotal: this.rowMaterialForm.value.finalTotal,
+      total: this.rowMaterialForm.value.total,
+      isGstEnabled: this.rowMaterialForm.value.isGstEnabled,
     }
     this.dialogRef.close({ event: this.action, data: payload })
   }
+
+ calculateAmounts(): void {
+  this.rowMaterialForm.valueChanges.subscribe((value) => {
+
+    const quantity = Number(value.quantity) || 0;
+    const price = Number(value.price) || 0;
+
+    // Base total
+    const total = quantity * price;
+
+    let sgst = Number(value.sGSt) || 0;
+    let cgst = Number(value.cGSt) || 0;
+    let finalTotal = total;
+
+    // GST enabled hoy to GST calculate karo
+    if (value.isGstEnabled) {
+
+      const sgstAmount = (total * sgst) / 100;
+      const cgstAmount = (total * cgst) / 100;
+
+      finalTotal = total + sgstAmount + cgstAmount;
+
+    } else {
+
+      // GST disabled hoy to 0 set karo
+      sgst = 0;
+      cgst = 0;
+
+      finalTotal = total;
+    }
+
+    this.rowMaterialForm.patchValue(
+      {
+        sGSt: sgst,
+        cGSt: cgst,
+        total: total.toFixed(2),
+        finalTotal: finalTotal.toFixed(2)
+      },
+      { emitEvent: false }
+    );
+  });
+}
 
 }
