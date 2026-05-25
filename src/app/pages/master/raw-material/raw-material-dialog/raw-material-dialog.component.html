@@ -1,49 +1,78 @@
-<h2 mat-dialog-title class="m-b-24 b-b-1 p-b-20"><strong>{{action}}Raw Material</strong></h2>
-<mat-dialog-content class="mat-typography" style="max-width: 600px" *ngIf="action !=='Delete'; else elseTemplate">
+<h2 mat-dialog-title class="m-b-24 b-b-1 p-b-20"><strong>{{action}} Raw Material</strong></h2>
+<mat-dialog-content  class="mat-typography" style="max-width: 600px" *ngIf="action !=='Delete'; else elseTemplate">
   <form [formGroup]="rowMaterialForm">
     <div class="row">
 
-      <div class="col-lg-6">
+      <div class="col-12 col-lg-6">
+        <mat-form-field appearance="outline" class="w-100 m-t-10">
+          <input matInput [matDatepicker]="creditDate" formControlName="creditDate" placeholder="Select Credit Date">
+          <mat-datepicker-toggle matSuffix [for]="creditDate"></mat-datepicker-toggle>
+          <mat-datepicker #creditDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-lg-6">
         <mat-form-field appearance="outline" class="w-100 m-t-10">
           <mat-label>Name</mat-label>
           <input type="text" matInput placeholder="Enter Name" min="0" formControlName="name">
         </mat-form-field>
       </div>
 
-      <div class="col-lg-6">
+      <div class="col-12 col-lg-6">
         <mat-form-field appearance="outline" class="w-100 m-t-10">
           <mat-label>Quantity</mat-label>
           <input type="number" matInput placeholder="Enter quantity" min="0" formControlName="quantity">
         </mat-form-field>
       </div>
 
-      <div class="col-lg-6">
+      <div class="col-12 col-lg-6">
         <mat-form-field appearance="outline" class="w-100 m-t-10">
           <mat-label>price</mat-label>
           <input type="number" matInput placeholder="Enter price" min="0" formControlName="price">
         </mat-form-field>
       </div>
 
-      <div class="col-lg-6">
-         <mat-form-field appearance="outline" class="w-100 m-t-10">
-                        <input matInput [matDatepicker]="creditDate" formControlName="creditDate"
-                            placeholder="Select Credit Date">
-                        <mat-datepicker-toggle matSuffix [for]="creditDate"></mat-datepicker-toggle>
-                        <mat-datepicker #creditDate></mat-datepicker>
-                    </mat-form-field>
+      <div class="col-12 col-lg-6">
+        <mat-form-field appearance="outline" class="w-100 m-t-10">
+          <mat-label>total</mat-label>
+          <input type="number" matInput placeholder="Enter total" min="0" formControlName="total">
+        </mat-form-field>
       </div>
-
-    </div>
-  </form>
-</mat-dialog-content>
-<mat-divider></mat-divider>
-<mat-dialog-actions class="p-24 justify-content-end">
-  <button mat-stroked-button color="warn" mat-dialog-close>Cancel</button>
-  <button mat-flat-button [mat-dialog-close]="true" color="primary" (click)="doAction();"
-    [disabled]="action !== 'Delete' &&!rowMaterialForm.valid">
-    {{action}}
-  </button>
-</mat-dialog-actions>
+      <div class="col-12 col-lg-6 d-flex">
+        <mat-slide-toggle formControlName="isGstEnabled" class="applygst">
+          Apply GST
+        </mat-slide-toggle>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="rowMaterialForm.get('isGstEnabled')?.value">
+        <mat-form-field appearance="outline" class="w-100 m-t-10">
+          <mat-label>S GST (%)</mat-label>
+          <input type="number" matInput placeholder="Enter S GSt" min="0" formControlName="sGSt">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-6"  *ngIf="rowMaterialForm.get('isGstEnabled')?.value">
+        <mat-form-field appearance="outline" class="w-100 m-t-10">
+          <mat-label>C GST (%)</mat-label>
+          <input type="number" matInput placeholder="Enter C GST" min="0" formControlName="cGSt">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-6">
+        <mat-form-field appearance="outline" class="w-100 m-t-10">
+          <mat-label>Final Total</mat-label>
+          <input type="number" matInput placeholder="Enter Total" min="0" formControlName="finalTotal">
+        </mat-form-field>
+      </div>
+      
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-divider></mat-divider>
+  <mat-dialog-actions class="p-24 justify-content-end">
+    <button mat-stroked-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-flat-button [mat-dialog-close]="true" color="primary" (click)="doAction();"
+      [disabled]="action !== 'Delete' &&!rowMaterialForm.valid">
+      {{action}}
+    </button>
+  </mat-dialog-actions>
 <ng-template #elseTemplate>
   <div class="p-x-24">
     <p>Sure to delete <span class="f-w-600">{{local_data.Name}}</span> ?</p>

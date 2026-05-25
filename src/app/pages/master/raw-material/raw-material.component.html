@@ -1,4 +1,4 @@
-<mat-card class="cardWithShadow">
+<mat-card class="cardWithShadow" id="mat-mdc-form-field-subscript-wrapper">
     <mat-card-content>
         <div class="responsive-header-container">
             <!-- Search Section -->
@@ -14,7 +14,7 @@
             <!-- Date Picker Section -->
             <div class="date-field">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Select Expenses Date</mat-label>
+                    <mat-label>Select Date</mat-label>
                     <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRawListForm">
                         <input matStartDate placeholder="Start date" formControlName="start">
                         <input matEndDate placeholder="End date" formControlName="end">
@@ -48,6 +48,15 @@
                     <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
                 </ng-container>
 
+                   <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+                        Date
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="f-s-14">
+                        {{ element.creditDate?.toDate() | date:'dd/MM/yyyy' }}
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
                         Name
@@ -75,25 +84,60 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="date">
+                <ng-container matColumnDef="totalAmount">
                     <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-                        Date
+                       Total Amount
                     </th>
                     <td mat-cell *matCellDef="let element" class="f-s-14">
-                        {{ element.creditDate?.toDate() | date:'dd/MM/yyyy' }}
+                        {{ element.totalAmount }}
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="totalAmount">
+                    <!-- <ng-container matColumnDef="totalAmount">
                     <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
                         Total Amount
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="d-flex align-items-center">
+                        <div>
                             <div class="m-l-16">
-                                <p class="mat-subtitle-1 f-s-16 m-t-0"
+                                <p class="f-s-14 m-t-0"
                                     [class.receivePayment]="element.totalAmount === calculateTotalReceivedPayment(element.receivePayment)">
                                     {{ element.totalAmount | number:'1.0-2' }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="sGSt">
+                    <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+                        S GST 
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="f-s-14">
+                        {{ element.sGSt }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cGSt">
+                    <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+                        C GST
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="f-s-14">
+                        {{ element.cGSt }}
+                    </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="finalTotal">
+                    <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+                        Final Total
+                    </th>
+                
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <div class="m-l-16">
+                                <p class="f-w-800 f-s-14 m-t-0"
+                                    [class.receivePayment]="element.finalTotal === calculateTotalReceivedPayment(element.receivePayment)">
+                                    {{ element.finalTotal | number:'1.0-2' }}
                                 </p>
                             </div>
                         </div>

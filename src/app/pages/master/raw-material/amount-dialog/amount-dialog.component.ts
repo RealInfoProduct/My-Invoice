@@ -25,7 +25,7 @@ export class AmountDialogComponent  implements OnInit {
     private loaderService: LoaderService,
   ) {
     this.amountDataSource = amountdata.receivePayment
-    amountdata['pendingAmount'] = (amountdata.totalAmount) - (amountdata.receivePayment.reduce((total: any, payment: any) => total + payment.paymentAmount, 0))
+    amountdata['pendingAmount'] = (amountdata.finalTotal) - (amountdata.receivePayment.reduce((total: any, payment: any) => total + payment.paymentAmount, 0))
   }
   ngOnInit(): void {
     this.buildForm()
@@ -46,7 +46,7 @@ export class AmountDialogComponent  implements OnInit {
       paymentAmount: this.amountForm.value.paymentAmount,
     }
     this.amountdata.receivePayment.push(paymentData)
-    const pendingTotalAmount = (this.amountdata.totalAmount) - (this.amountdata.receivePayment.reduce((total: any, payment: any) => total + payment.paymentAmount, 0))
+    const pendingTotalAmount = (this.amountdata.finalTotal) - (this.amountdata.receivePayment.reduce((total: any, payment: any) => total + payment.paymentAmount, 0))
 
     // if (pendingTotalAmount === 0) {
     //   this.amountdata.isPayment = true
@@ -93,7 +93,7 @@ export class AmountDialogComponent  implements OnInit {
         )
 
         this.amountDataSource = this.amountdata.receivePayment
-        this.amountdata['pendingAmount'] = (this.amountdata.totalAmount) - (this.amountdata.receivePayment.reduce((total: any, payment: any) => total + payment.paymentAmount, 0))
+        this.amountdata['pendingAmount'] = (this.amountdata.finalTotal) - (this.amountdata.receivePayment.reduce((total: any, payment: any) => total + payment.paymentAmount, 0))
 
         this.loaderService.setLoader(false)
       }
