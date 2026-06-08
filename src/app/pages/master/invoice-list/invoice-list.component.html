@@ -4,7 +4,7 @@
     <div class="row g-3 align-items-center">
 
       <!-- Search -->
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-md-6 col-lg-3">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <input matInput placeholder="Search Invoice"
                  (keyup)="applyFilter($any($event.target).value)" />
@@ -15,7 +15,7 @@
       </div>
 
       <!-- Date -->
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-md-6 col-lg-3">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <mat-label>Select Invoice Date</mat-label>
 
@@ -28,9 +28,25 @@
           <mat-date-range-picker #picker (closed)="filterDate()"></mat-date-range-picker>
         </mat-form-field>
       </div>
-
+      
       <!-- Buttons -->
-      <div class="col-12 col-lg-4 ADDbutton">
+      <div class="col-12 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100 hide-hint">
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-1 d-block">
+            {{'addinvoice.SelectParty' | translate}}
+          </mat-label>
+      
+          <mat-select  [(ngModel)]="selectedPartyId"  (selectionChange)="onPartyChange($event.value)" placeholder="{{'addinvoice.SelectParty' | translate}}">
+      
+            <mat-option *ngFor="let item of partyList" [value]="item.id">
+              {{item.partyName}}
+            </mat-option>
+      
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div class="col-12 col-lg-3 ADDbutton">
         <div class="button-group">
 
           <button mat-flat-button color="primary" (click)="addInvoice()">
