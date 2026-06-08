@@ -28,7 +28,7 @@ export class InvoiceListComponent implements OnInit {
 
   firms: any[] = [];
   firmWiseInvoices: any = {};
-
+  selectedPartyId: string = '';
   displayedColumns: string[] = [
     '#',
     'firmName',
@@ -133,6 +133,73 @@ export class InvoiceListComponent implements OnInit {
   showAmountList(obj: any) {
     const dialogRef = this.dialog.open(amountlistdialog, { data: obj });
   }
+
+onPartyChange(partyId: string) {
+  this.selectedPartyId = partyId;
+
+  this.applyAllFilters();   // filter data first
+  this.openPartyTab(partyId); // then switch tab
+}
+
+openPartyTab(partyId: string) {
+
+  // find invoice of selected party
+  const invoice = this.invoiceList.find(
+    (inv: any) => inv.partyId === partyId
+  );
+
+  if (!invoice) return;
+
+  const firmId = invoice.firmId;
+
+  const tabIndex = this.firms.findIndex(
+    (f: any) => f.firmId === firmId
+  );
+
+  if (tabIndex !== -1 && this.tabGroup) {
+    this.tabGroup.selectedIndex = tabIndex;
+  }
+}
+
+applyAllFilters() {
+   const start = this.dateInvoiceListForm.value.start;
+  const end = this.dateInvoiceListForm.value.end;
+
+  const startDate = start ? new Date(start) : null;
+  const endDate = end ? new Date(end) : null;
+
+  if (startDate) startDate.setHours(0, 0, 0, 0);
+  if (endDate) endDate.setHours(23, 59, 59, 999);
+
+  Object.keys(this.firmWiseInvoices).forEach((firmId: string) => {
+
+    const original = this.invoiceList.filter(
+      (x: any) => x.firmId === firmId
+    );
+
+    const filtered = original.filter((inv: any) => {
+
+      // ✅ PARTY FILTER
+      if (this.selectedPartyId && inv.partyId !== this.selectedPartyId) {
+        return false;
+      }
+
+      // ✅ DATE FILTER
+      if (inv.date) {
+        const d = new Date(inv.date);
+
+        if (startDate && d < startDate) return false;
+        if (endDate && d > endDate) return false;
+      }
+
+      return true;
+    });
+
+    // refresh datasource
+    this.firmWiseInvoices[firmId].data = filtered;
+    this.firmWiseInvoices[firmId]._updateChangeSubscription();
+  });
+}
 
 applyFilter(filterValue: string): void {
   const filter = filterValue.trim().toLowerCase();
@@ -388,10 +455,18 @@ filedownload() {
   const formattedEnd = endDate.toLocaleDateString('en-GB');
 
   const firmName = this.getFirmHeader(firm.firmId)?.header || '';
+const partyObj = this.partyList.find(
+  (p: any) => p.id === this.selectedPartyId
+);
+
+const partyName = partyObj?.partyName || 'All Parties';
+
+
   // ✅ Title
   doc.setFontSize(12);
   doc.text(`Firm Name: ${firmName}`, 14, 12);
-  doc.text(`Invoice Report Date: ${formattedStart} to ${formattedEnd}`, 14, 18);
+  doc.text(`Party Name: ${partyName}`, 14, 18);
+  doc.text(`Invoice Report Date: ${formattedStart} to ${formattedEnd}`, 14, 24);
 
   // ✅ Totals
   let total = 0;
