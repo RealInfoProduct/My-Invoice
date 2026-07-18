@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collectionData, deleteDoc, doc, Firestore, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
-import { PartyList, FirmList, ProductList, RegisterUser, InvoiceList, IncomeList, ExpensesList, ExpensesmasterList, EmployeeList, AttendanceList, BonusList, WithdrawalList, MachineSalaryList, BrokerList, OrderList, BrokerageList, TransPortList, RawList } from '../interface/invoice';
+import { addDoc, collectionData, deleteDoc, doc, Firestore, query, setDoc, updateDoc, where, getDocs } from '@angular/fire/firestore';
+import { PartyList, FirmList, ProductList, RegisterUser, InvoiceList, IncomeList, ExpensesList, ExpensesmasterList, EmployeeList, AttendanceList, BonusList, WithdrawalList, MachineSalaryList, BrokerList, OrderList, BrokerageList, TransPortList, RawList, CreditNoteList } from '../interface/invoice';
 import { collection } from '@firebase/firestore';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
@@ -407,5 +407,52 @@ export class FirebaseService {
   getAllExpensesmaster() {
     let dataRef = collection(this.fService, 'expensesmasterList')
     return collectionData(dataRef, { idField: 'id' })
+  }
+
+  /////////////////////// Credit Note List ////////////////////////
+
+  addCreditNote(data: CreditNoteList) {
+    data.id = doc(collection(this.fService, 'id')).id
+    return addDoc(collection(this.fService, 'creditNotes'), data)
+  }
+
+  updateCreditNote(updateId: string, payload: any) {
+    let dataRef = doc(this.fService, `creditNotes/${updateId}`);
+    return updateDoc(dataRef, payload)
+  }
+
+  deleteCreditNote(deleteId: any) {
+    let docRef = doc(collection(this.fService, 'creditNotes'), deleteId);
+    return deleteDoc(docRef)
+  }
+
+  getAllCreditNote() {
+    let dataRef = collection(this.fService, 'creditNotes')
+    return collectionData(dataRef, { idField: 'id' })
+  }
+
+  async getLatestCreditNoteNumber(userId: string, firmId: string, accountYear: string): Promise<string> {
+    const q = query(
+      collection(this.fService, 'creditNotes'),
+      where('userId', '==', userId),
+      where('firmId', '==', firmId),
+      where('accountYear', '==', accountYear)
+    );
+    const querySnapshot = await getDocs(q);
+    let maxVal = 0;
+    querySnapshot.forEach((docVal) => {
+      const data = docVal.data() as any;
+      if (data && data.creditNoteNumber) {
+        const match = data.creditNoteNumber.match(/CN-(\d+)/);
+        if (match) {
+          const val = parseInt(match[1], 10);
+          if (val > maxVal) {
+            maxVal = val;
+          }
+        }
+      }
+    });
+    const nextNum = maxVal + 1;
+    return 'CN-' + String(nextNum).padStart(3, '0');
   }
 }

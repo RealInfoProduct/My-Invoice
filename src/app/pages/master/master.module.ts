@@ -41,6 +41,12 @@ import { TransPortDialogComponent } from './trans-port/trans-port-dialog/trans-p
 import { RawMaterialComponent } from './raw-material/raw-material.component';
 import { RawMaterialDialogComponent } from './raw-material/raw-material-dialog/raw-material-dialog.component';
 import { AmountDialogComponent } from './raw-material/amount-dialog/amount-dialog.component';
+import { CreditNoteComponent } from './credit-note/credit-note.component';
+import { DebitNoteComponent } from './debit-note/debit-note.component';
+import { CreditNoteDialogComponent } from './credit-note/credit-note-dialog/credit-note-dialog.component';
+import { DebitNoteDialogComponent } from './debit-note/debit-note-dialog/debit-note-dialog.component';
+import { AddCreditNoteComponent } from './credit-note/add-credit-note/add-credit-note.component';
+import { CreditNotePdfViewComponent } from './credit-note/add-credit-note/pdfview/pdfview.component';
 
 
 @NgModule({
@@ -80,6 +86,12 @@ import { AmountDialogComponent } from './raw-material/amount-dialog/amount-dialo
     RawMaterialComponent,
     RawMaterialDialogComponent,
     AmountDialogComponent,
+    CreditNoteComponent,
+    DebitNoteComponent,
+    CreditNoteDialogComponent,
+    DebitNoteDialogComponent,
+    AddCreditNoteComponent,
+    CreditNotePdfViewComponent,
   ],
   imports: [
     CommonModule,

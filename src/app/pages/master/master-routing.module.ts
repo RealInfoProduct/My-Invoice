@@ -19,6 +19,10 @@ import { OrderComponent } from './order/order.component';
 import { BrokerListComponent } from './broker/broker-list/broker-list.component';
 import { TransPortComponent } from './trans-port/trans-port.component';
 import { RawMaterialComponent } from './raw-material/raw-material.component';
+import { CreditNoteComponent } from './credit-note/credit-note.component';
+import { DebitNoteComponent } from './debit-note/debit-note.component';
+import { AddCreditNoteComponent } from './credit-note/add-credit-note/add-credit-note.component';
+import { CreditNotePdfViewComponent } from './credit-note/add-credit-note/pdfview/pdfview.component';
 
 
 export const MasterRoutes: Routes = [
@@ -188,6 +192,50 @@ export const MasterRoutes: Routes = [
           urls: [
             { title: 'Master', url: '/master/machineSalary' },
             { title: 'MachineSalary' },
+          ],
+        },
+      },
+      {
+        path: 'debitNote',
+        component: DebitNoteComponent,
+        data: {
+          title: 'debitNote',
+          urls: [
+            { title: 'Master', url: '/master/debitNote' },
+            { title: 'debitNote' },
+          ],
+        },
+      },
+      {
+        path: 'creditNote',
+        component: CreditNoteComponent,
+        data: {
+          title: 'creditNote',
+          urls: [
+            { title: 'Master', url: '/master/creditNote' },
+            { title: 'creditNote' },
+          ],
+        },
+      },
+      {
+        path: 'addcreditnote',
+        component: AddCreditNoteComponent,
+        data: {
+          title: 'Add Credit Note',
+          urls: [
+            { title: 'Master', url: '/master/addcreditnote' },
+            { title: 'Add Credit Note' },
+          ],
+        },
+      },
+      {
+        path: 'creditnoteview',
+        component: CreditNotePdfViewComponent,
+        data: {
+          title: 'Credit Note View',
+          urls: [
+            { title: 'Master', url: '/master/creditNote' },
+            { title: 'Credit Note View' },
           ],
         },
       },

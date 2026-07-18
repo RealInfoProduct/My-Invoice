@@ -210,3 +210,34 @@ export interface ExpensesmasterList{
     id:string
     type:string
 }
+
+export interface CreditNoteList {
+    id: string;
+    creditNoteNumber: string;
+    creditNoteDate: string;
+    partyId: string;
+    partyName: any;
+    firmId: string;
+    firmName: any;
+    invoiceId: string;
+    invoiceNumber: number;
+    invoiceDate: string;
+    products: any[];
+    subtotal: number;
+    discount: number;
+    taxableAmount: number;
+    cGST: any;
+    sGST: number;
+    igst: number;
+    totalTax: number;
+    grandTotal: number;
+    roundOff: number;
+    finalAmount: number;
+    status: string;
+    remarks: string;
+    createdAt: any;
+    updatedAt: any;
+    createdBy: string;
+    userId: string;
+    accountYear: string;
+}
