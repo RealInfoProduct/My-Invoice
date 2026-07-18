@@ -10,9 +10,10 @@ export class LoaderService {
 
   public loaderSetValue$ = new BehaviorSubject<any>(false);
   invoiceData :any
+  creditNoteData :any
   
   setLoader(value:any){    
-    this.loaderSetValue$.next(value);
+  this.loaderSetValue$.next(value);
   }
   
   setInvoiceData(value : any){
@@ -20,5 +21,12 @@ export class LoaderService {
   }
   getInvoiceData(){
     return this.invoiceData
+  }
+
+  setCreditNoteData(value : any){
+    this.creditNoteData = value
+  }
+  getCreditNoteData(){
+    return this.creditNoteData
   }
 }

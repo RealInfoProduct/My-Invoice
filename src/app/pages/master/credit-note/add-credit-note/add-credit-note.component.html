@@ -1,0 +1,254 @@
+<div class="invoiceTab" id="mat-mdc-tab-header">
+    <div class="GenerateInvoice" *ngIf="creditNoteForm.get('party')?.value || data.length > 0">
+        <div class="invoiceNumber" *ngIf="creditNoteForm.get('party')?.value">
+            <h3>Credit Note :- {{nextCreditNoteNumber}} - {{accountYear}}</h3>
+        </div>
+        <button *ngIf="data.length > 0" mat-flat-button color="primary" (click)="generateCreditNote()">
+            <i-tabler name="eye" class="icon-18 d-flex"></i-tabler>
+        </button>
+    </div>
+
+    <form [formGroup]="creditNoteForm">
+        <mat-card class="cardWithShadow m-15">
+            <mat-card-content class="p-24">
+                <div class="row">
+                    <!-- Party Select -->
+                    <div class="col-12 col-md-4">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-1 d-block">
+                            Select Party<span class="required"> *</span>
+                        </mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <mat-select formControlName="party" placeholder="Select Party"
+                                (selectionChange)="seletedParty($event)">
+                                <mat-option *ngFor="let item of partyList" [value]="item">
+                                    {{item.partyName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Invoice Select -->
+                    <div class="col-12 col-md-4">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-1 d-block">
+                            Select Invoice<span class="required"> *</span>
+                        </mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <mat-select formControlName="invoice" placeholder="Select Invoice"
+                                (selectionChange)="seletedInvoice($event)">
+                                <mat-option *ngFor="let item of filteredInvoiceList" [value]="item">
+                                    Invoice No: {{item.invoiceNumber}} (Date: {{item.date}})
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Date Selection -->
+                    <div class="col-12 col-md-4">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-1 d-block">
+                            Select Date<span class="required"> *</span>
+                        </mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <input matInput [matDatepicker]="picker" formControlName="date" required />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Readonly Invoice Details Info Box -->
+                    <div class="col-12" *ngIf="creditNoteForm.get('invoice')?.value">
+                        <div class="info-box">
+                            <strong>Original Invoice Details:</strong>
+                            <p>Discount: {{creditNoteForm.get('invoice')?.value.discount}}% | CGST:
+                                {{creditNoteForm.get('invoice')?.value.cGST}}% | SGST:
+                                {{creditNoteForm.get('invoice')?.value.sGST}}%</p>
+                        </div>
+                    </div>
+
+                    <!-- Remarks -->
+                    <div class="col-12 col-md-12">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-1 d-block">Remarks / Reason for Credit
+                            Note</mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <input matInput formControlName="remarks" placeholder="Enter remarks" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row m-t-20" *ngIf="creditNoteForm.get('invoice')?.value">
+                    <!-- Product Select -->
+                    <div class="col-12 col-md-3">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+                            Select Product<span class="required"> *</span>
+                        </mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <mat-select formControlName="product" placeholder="Select Product">
+                                <mat-option [value]="item" *ngFor="let item of invoiceProducts">
+                                    {{item.productName?.productName || item.productName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Measurement Unit -->
+                    <div class="col-12 col-md-2">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">Unit</mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <input matInput formControlName="measurementUnits" readonly placeholder="Unit" />
+                        </mat-form-field>
+                    </div>
+
+                    <!-- HSN Code -->
+                    <div class="col-12 col-md-2">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">HSN Code</mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <input matInput formControlName="HSNCode" readonly placeholder="HSN Code" />
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Rate (Price) -->
+                    <div class="col-12 col-md-2">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+                            Credit Rate<span class="required"> *</span>
+                        </mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <input type="number" matInput formControlName="price" placeholder="Rate" min="0" />
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Credit Qty -->
+                    <div class="col-12 col-md-2">
+                        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+                            Credit Qty<span class="required"> *</span>
+                        </mat-label>
+                        <mat-form-field appearance="outline" class="w-100 m-t-8">
+                            <input type="number" matInput formControlName="qty" placeholder="Quantity" min="0.01" />
+                            <mat-hint *ngIf="creditNoteForm.get('product')?.value" style="color: #5d87ff;">
+                                Available Qty: {{selectedProductRemainingQty}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Add Button -->
+                    <div class="col-12 col-md-1 productButton">
+                        <button *ngIf="!editMode" mat-flat-button color="primary" (click)="addData()">Add</button>
+                        <button *ngIf="editMode" mat-flat-button color="accent" (click)="updateData()">Update</button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+
+    <!-- Products Table -->
+    <mat-card class="cardWithShadow m-15" *ngIf="data.length > 0">
+        <mat-card-content class="p-24">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="addinvoiceDataSource" class="mat-table w-100">
+
+                    <!-- Serial Number -->
+                    <ng-container matColumnDef="#">
+                        <th mat-header-cell *matHeaderCellDef>Sr.</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{i+1}}</td>
+                    </ng-container>
+
+                    <!-- PO Number -->
+                    <ng-container matColumnDef="PoNumber">
+                        <th mat-header-cell *matHeaderCellDef>PO Number</th>
+                        <td mat-cell *matCellDef="let element">{{element.poNumber}}</td>
+                    </ng-container>
+
+                    <!-- Product -->
+                    <ng-container matColumnDef="product">
+                        <th mat-header-cell *matHeaderCellDef>Product</th>
+                        <td mat-cell *matCellDef="let element">{{element.product.productName?.productName ||
+                            element.product.productName || element.product}}</td>
+                    </ng-container>
+
+                    <!-- HSN Code -->
+                    <ng-container matColumnDef="HSNCode">
+                        <th mat-header-cell *matHeaderCellDef>HSN Code</th>
+                        <td mat-cell *matCellDef="let element">{{element.HSNCode}}</td>
+                    </ng-container>
+
+                    <!-- Unit -->
+                    <ng-container matColumnDef="measurementUnits">
+                        <th mat-header-cell *matHeaderCellDef>Unit</th>
+                        <td mat-cell *matCellDef="let element">{{element.measurementUnits}}</td>
+                    </ng-container>
+
+                    <!-- Qty -->
+                    <ng-container matColumnDef="qty">
+                        <th mat-header-cell *matHeaderCellDef>Qty</th>
+                        <td mat-cell *matCellDef="let element">{{element.qty}}</td>
+                    </ng-container>
+
+                    <!-- Price -->
+                    <ng-container matColumnDef="Price">
+                        <th mat-header-cell *matHeaderCellDef>Price</th>
+                        <td mat-cell *matCellDef="let element">{{element.price | number:'1.2-2'}}</td>
+                    </ng-container>
+
+                    <!-- Final Amount -->
+                    <ng-container matColumnDef="FinalAmount">
+                        <th mat-header-cell *matHeaderCellDef>Final Amount</th>
+                        <td mat-cell *matCellDef="let element">{{element.finalAmount | number:'1.2-2'}}</td>
+                    </ng-container>
+
+                    <!-- Action -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element" class="action-link">
+                            <a class="m-r-10 cursor-pointer" (click)="edit(element)">
+                                <i-tabler name="edit" class="icon-18"></i-tabler>
+                            </a>
+                            <a class="m-r-10 cursor-pointer" (click)="deletedata(element.id)">
+                                <i-tabler name="trash" class="icon-18"></i-tabler>
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+
+            <!-- Totals Section -->
+            <div class="row justify-content-end m-t-20">
+                <div class="col-12 col-md-4">
+                    <mat-card class="cardWithShadow bg-light">
+                        <mat-card-content>
+                            <div class="d-flex justify-content-between p-y-8 border-bottom">
+                                <span class="f-w-600 text-muted">Sub Total:</span>
+                                <span class="f-w-700">Rs. {{calculateSubTotal() | number:'1.2-2'}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between p-y-8 border-bottom">
+                                <span class="f-w-600 text-muted">Discount
+                                    ({{creditNoteForm.get('invoice')?.value?.discount || 0}}%):</span>
+                                <span class="f-w-700">Rs. {{calculateDiscount(calculateSubTotal()) |
+                                    number:'1.2-2'}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between p-y-8 border-bottom">
+                                <span class="f-w-600 text-muted">CGST ({{creditNoteForm.get('invoice')?.value?.cGST ||
+                                    0}}%):</span>
+                                <span class="f-w-700">Rs. {{calculateTax(calculateSubTotal() -
+                                    calculateDiscount(calculateSubTotal())).cgst | number:'1.2-2'}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between p-y-8 border-bottom">
+                                <span class="f-w-600 text-muted">SGST ({{creditNoteForm.get('invoice')?.value?.sGST ||
+                                    0}}%):</span>
+                                <span class="f-w-700">Rs. {{calculateTax(calculateSubTotal() -
+                                    calculateDiscount(calculateSubTotal())).sgst | number:'1.2-2'}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between p-y-8">
+                                <span class="f-s-16 f-w-700 text-primary">Grand Total:</span>
+                                <span class="f-s-16 f-w-700 text-primary">Rs. {{ (calculateSubTotal() -
+                                    calculateDiscount(calculateSubTotal())) + calculateTax(calculateSubTotal() -
+                                    calculateDiscount(calculateSubTotal())).cgst + calculateTax(calculateSubTotal() -
+                                    calculateDiscount(calculateSubTotal())).sgst | number:'1.0-0'}}</span>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
