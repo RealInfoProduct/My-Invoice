@@ -1,0 +1,422 @@
+$primary-color: #5d87ff;
+$success-color: #28a745;
+$error-color: #fa896b;
+$border-color: #ebf1f6;
+
+.invoiceTab {
+  position: relative;
+  padding: 10px;
+
+  .GenerateInvoice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 15px 5px 15px;
+    padding: 10px 5px;
+
+    .invoiceNumber {
+      h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2a3547;
+      }
+    }
+
+    button {
+      margin-left: auto;
+    }
+  }
+
+  #mat-mdc-tab-header {
+    ::ng-deep {
+      .mat-mdc-tab-header {
+        max-width: 50% !important;
+      }
+
+      .mat-mdc-tab.mdc-tab {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .cardWithShadow {
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid $border-color;
+  }
+
+  .error-message {
+    position: absolute;
+    left: 0;
+    font-size: 11px;
+  }
+
+  .payment-date {
+    background-color: $success-color;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    margin-top: 8px;
+  }
+
+  .productButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .search-container {
+    padding: 5px;
+
+    input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid $border-color;
+
+      &::placeholder {
+        color: #888;
+        opacity: 1;
+      }
+    }
+  }
+
+  .table-responsive {
+    table {
+      width: 100%;
+
+      th,
+      td {
+        text-align: center;
+        padding: 12px;
+        white-space: nowrap;
+      }
+
+      .action-link {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        a {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1420px) {
+  #mat-mdc-tab-header {
+    ::ng-deep .mat-mdc-tab-header {
+      max-width: 100% !important;
+    }
+  }
+
+  .invoiceTab .GenerateInvoice {
+    margin: 10px 0;
+    padding: 10px 0;
+  }
+
+  .row {
+    .col-12,
+    .col-md-4,
+    .col-md-2,
+    .col-md-1 {
+      width: 100%;
+      max-width: 100%;
+      flex: 0 0 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+  .productButton {
+    margin-top: 10px;
+  }
+
+  .goToNextTab {
+    margin-top: 13px;
+  }
+
+  .table-responsive table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-card-content {
+    padding: 16px !important;
+  }
+
+  .payment-date {
+    margin-top: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .action-link {
+    flex-direction: row;
+  }
+
+  mat-paginator {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .mat-form-field {
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  #mat-mdc-tab-header {
+    ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+      font-size: 12px;
+    }
+  }
+
+  .mat-column-Defectiveitem,
+  .mat-column-PoNumber,
+  .mat-column-HSNCode {
+    display: none;
+  }
+
+  .GenerateInvoice {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+
+    .invoiceNumber {
+      padding-right: 0;
+    }
+
+    button {
+      margin-left: 0;
+    }
+  }
+}
+
+.mat-mdc-card-content:last-child {
+  padding-bottom: 0px;
+}
+
+@media (max-width: 1279px) {
+  .ADDbutton {
+    margin-top: 10px;
+  }
+}
+
+.mobile-view {
+  display: none; // Hidden by default
+}
+
+.no-record-mobile {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  font-size: 16px;
+}
+
+.text-danger {
+  color: #fa896b !important;
+  font-weight: 600;
+}
+
+.text-success {
+  color: #13deb9 !important;
+  font-weight: 600;
+}
+
+.mobile-report-card {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+
+    .employee-name {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #343a40;
+    }
+
+    .sr-no {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #6c757d;
+    }
+  }
+
+  .card-body {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    .detail-item {
+      .label {
+        font-size: 12px;
+        color: #6c757d;
+        margin-bottom: 4px;
+      }
+
+      .value {
+        font-size: 14px;
+        font-weight: 500;
+        color: #212529;
+      }
+    }
+  }
+
+  .card-footer {
+    margin-top: auto;
+    padding: 12px 16px;
+    background-color: #343a40;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .final-label {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .final-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-view {
+    display: none;
+  }
+
+  .mobile-view {
+    display: block;
+  }
+
+  .cardWithShadow .p-24 {
+    padding: 12px !important;
+    background-color: #f8f9fa;
+  }
+
+  .cardWithShadow {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-field {
+  flex: 1 1 300px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .top-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-field {
+    width: 100%;
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .buttons button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .buttons {
+    flex-direction: column;
+  }
+}
+
+.btn-group-custom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 1279px) {
+  .btn-group-custom {
+    justify-content: flex-start;
+  }
+
+  .allButton {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-group-custom {
+    width: 100%;
+  }
+
+  .btn-group-custom button {
+    flex: 1;
+  }
+}
+
+.allButton {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.info-box {
+  background-color: #f0f4ff;
+  border-left: 4px solid $primary-color;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 13px;
+
+  p {
+    margin: 3px 0;
+  }
+}

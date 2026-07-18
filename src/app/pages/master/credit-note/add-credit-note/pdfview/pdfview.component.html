@@ -1,0 +1,17 @@
+<div class="submitButton">
+  <button mat-flat-button color="primary" style="margin-left: 10px;" (click)="back()">
+    <span class="d-flex align-items-center gap-8">
+      <i-tabler name="arrow-left" class="icon-18"></i-tabler>
+      <span>{{'pdfview.Back' | translate}}</span>
+    </span>
+  </button>
+  <button mat-flat-button color="primary" style="margin-left: 10px;" (click)="submitCreditNote()">
+    <span class="d-flex align-items-center gap-8">
+      <i-tabler name="printer" class="icon-18"></i-tabler>
+      <span>Save & Print</span>
+    </span>
+  </button>
+</div>
+<div *ngIf="blobUrl">
+  <iframe [src]="blobUrl" width="100%" height="730px"></iframe>
+</div>

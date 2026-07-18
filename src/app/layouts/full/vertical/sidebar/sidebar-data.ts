@@ -44,6 +44,16 @@ export const navItems: NavItem[] = [
     route: '/master/rawmaster',
   },
   {
+    displayName: 'Credit Note',
+    iconName: 'file-plus',
+    route: '/master/creditNote',
+  },
+  // {
+  //   displayName: 'Debit Note',
+  //   iconName: 'file-minus',
+  //   route: '/master/debitNote',
+  // },
+  {
     navCap: 'Master',
   },
   {

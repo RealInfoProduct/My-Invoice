@@ -1,0 +1,249 @@
+/* Base styles */
+.cardWithShadow {
+    margin: 16px;
+
+    .mat-card-content {
+        padding: 24px;
+    }
+}
+
+.hide-hint {
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    .cardWithShadow {
+        .mat-card-content {
+            padding: 16px;
+        }
+
+        .row {
+            flex-wrap: wrap;
+            gap: 16px;
+
+            .col-lg-4,
+            .col-4 {
+                flex: 1 1 calc(50% - 16px);
+                min-width: calc(50% - 16px);
+            }
+
+            .col-lg-4.d-flex {
+                justify-content: flex-start !important;
+                margin-top: 8px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .cardWithShadow {
+        margin: 8px;
+
+        .row {
+            flex-direction: column;
+            gap: 12px;
+
+            .col-lg-4,
+            .col-4 {
+                flex: 1 1 100%;
+                min-width: 100%;
+            }
+
+            .col-lg-4.d-flex {
+                justify-content: center !important;
+                margin-top: 0;
+            }
+        }
+
+        mat-form-field {
+            width: 100% !important;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .cardWithShadow {
+        .mat-card-content {
+            padding: 12px;
+        }
+
+        .mat-date-range-input {
+            display: flex;
+            flex-direction: column;
+
+            input {
+                width: 100% !important;
+            }
+        }
+
+        button[mat-flat-button] {
+            width: 100%;
+            padding: 0 8px;
+        }
+    }
+}
+
+@mixin status-border($borderColor) {
+    border: 1px solid $borderColor;
+    border-radius: 12px;
+    padding: 5px 10px;
+}
+
+.receivePayment {
+    color: green;
+    @include status-border(green);
+}
+
+.m-t20 {
+    margin-top: 10px;
+}
+
+.mat-mdc-card-content:last-child {
+    padding-bottom: 0px;
+}
+
+@media (max-width: 1279px) {
+    .ADDbutton {
+        margin-top: 15px;
+    }
+
+    .button-group button {
+        flex: 1;
+    }
+}
+
+.button-group button {
+    margin-left: 10px;
+}
+
+.button-group button:first-child {
+    margin-left: 0;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    /* 👈 space between buttons */
+    flex-wrap: wrap;
+}
+
+.mobile-view {
+    display: none; // Hidden by default
+}
+
+.no-record-mobile {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+    font-size: 16px;
+}
+
+// Helper text color classes
+.text-danger {
+    color: #fa896b !important;
+    font-weight: 600;
+}
+
+.text-success {
+    color: #13deb9 !important;
+    font-weight: 600;
+}
+
+/* --- New Mobile Card Design --- */
+.mobile-report-card {
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    // Card Header
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+
+        .employee-name {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .sr-no {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+    }
+
+    // Card Body
+    .card-body {
+        padding: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; // 2-column layout
+        gap: 16px; // Gap between grid items
+
+        .detail-item {
+
+            .label {
+                font-size: 12px;
+                color: #6c757d;
+                margin-bottom: 4px;
+            }
+
+            .value {
+                font-size: 14px;
+                font-weight: 500;
+                color: #212529;
+            }
+        }
+    }
+
+    // Card Footer
+    .card-footer {
+        margin-top: auto; // Pushes footer to the bottom
+        padding: 12px 16px;
+        background-color: #343a40; // Dark background
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .final-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .final-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+    }
+}
+
+/* --- Media query to show mobile view --- */
+@media (max-width: 767px) {
+    .desktop-view {
+        display: none;
+    }
+
+    .mobile-view {
+        display: block;
+    }
+
+    .cardWithShadow .p-24 {
+        padding: 12px !important;
+        background-color: #f8f9fa; // Light background for the whole page on mobile
+    }
+}
