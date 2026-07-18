@@ -48,11 +48,11 @@ export const navItems: NavItem[] = [
     iconName: 'file-plus',
     route: '/master/creditNote',
   },
-  {
-    displayName: 'Debit Note',
-    iconName: 'file-minus',
-    route: '/master/debitNote',
-  },
+  // {
+  //   displayName: 'Debit Note',
+  //   iconName: 'file-minus',
+  //   route: '/master/debitNote',
+  // },
   {
     navCap: 'Master',
   },
